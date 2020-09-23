@@ -18,5 +18,13 @@
     <form:form action="${pageContext.request.contextPath}/logout">
         <button type="submit">Log out</button>
     </form:form>
+
+    <div >
+        <secutiry:authorize access="hasRole('MANAGER')">
+            <a  href="${pageContext.request.contextPath}/manager/addHotel">Add Hotel</a>
+        </secutiry:authorize>
+
+    </div>
+
 </body>
 </html>

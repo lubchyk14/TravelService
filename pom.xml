@@ -125,6 +125,26 @@
       <artifactId>hibernate-core</artifactId>
       <version>5.4.20.Final</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-entitymanager</artifactId>
+      <version>5.4.21.Final</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <version>6.1.5.Final</version>
+    </dependency>
+    <!--        Hibernate ORM stack-->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-agroal</artifactId>
+      <version>5.4.20.Final</version>
+      <type>pom</type>
+    </dependency>
+
 
     <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs -->
     <dependency>
