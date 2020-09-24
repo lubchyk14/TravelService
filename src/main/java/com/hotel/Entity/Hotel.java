@@ -17,7 +17,10 @@ public class Hotel {
     private String hotelName;
 
     @ManyToOne(fetch = FetchType.EAGER,
-                cascade = {CascadeType.ALL})
+                cascade = {CascadeType.DETACH,
+                        CascadeType.MERGE,
+                        CascadeType.PERSIST,
+                        CascadeType.REFRESH})
     @JoinColumn(name = "country_id")
     private Country country;
 

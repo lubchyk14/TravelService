@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.sql.DataSource;
 import javax.transaction.Transactional;
@@ -40,6 +41,7 @@ public class SessionSupplier {
             Hotel hotel = new Hotel(name);
             Session session = getSession();
             //start transaction
+
             session.beginTransaction();
             //add hotel to DB table
             session.save(hotel);
@@ -122,6 +124,7 @@ public class SessionSupplier {
 //        try {
 //            Session session = getSession();
 //            session.beginTransaction();
+//    return null if record with specified id is found
 //            Hotel hotel = session.get(Hotel.class,id);
 //            session.delete(hotel);
 //            session.getTransaction().commit();
@@ -149,16 +152,46 @@ public class SessionSupplier {
 //
 //    }
 
+    public void deleteHotelByName(String hotelName,String countryName){
+        Session session = getSession();
+        try{
+
+            session.beginTransaction();
+            Country country = (Country)session.createQuery("from Country where countryName=?1")
+                    .setParameter(1,countryName)
+                    .getSingleResult();
+            Hotel hotel = (Hotel)session
+                    .createQuery("from Hotel where hotelName=?1 and country=?2")
+                    .setParameter(1,hotelName)
+                    .setParameter(2,country)
+                    .getSingleResult();
+            //remove the associated link reference
+            //break bi-directional link
+            hotel.getCountry().getHotels().remove(hotel);
+
+            session.delete(hotel);
+            session.getTransaction().commit();
+        }catch (NoResultException exception) {
+            System.out.println("No such country or hotel found");
+        }finally {
+            //need to close the session to prevent connection leak!!!!!!!!!!!!!!!!!!!!!!!!!
+            session.close();
+            sessionFactory.close();
+        }
+    }
     public void addHotel(){
 
         try {
             Session session = getSession();
             session.beginTransaction();
-            Country country = new Country("Germany");
-            Hotel hotel = new Hotel("David");
-            hotel.setCountry(country);
-//            session.save(country);
-            session.save(hotel);
+//            Country country = new Country("Germany");
+            Hotel hotel = new Hotel("Spain hotel");
+//            Country country = session.get(Country.class,3);
+            Country country = new Country("Spain");
+            country.addHotel(hotel);
+//            hotel.setCountry(country);
+            session.save(country);
+//            session.save(hotel);
             session.getTransaction().commit();
         } finally {
             sessionFactory.close();
@@ -178,11 +211,12 @@ public class SessionSupplier {
     }
 
     public static void main(String[] args) {
-        Country c = new SessionSupplier().getCountryById(3);
-        if(c!=null){
-            System.out.println(c);
-        }
-
+//        Country c = new SessionSupplier().getCountryById(3);
+//        if(c!=null){
+//            System.out.println(c);
+//        }
+//        new SessionSupplier().deleteHotelByName("fadf","Germany");
+//            new SessionSupplier().addHotel();
 //        new SessionSupplier().deleteHotel(1);
 //        new SessionSupplier().addHotel("Olga");
 //        new SessionSupplier().addHotel("Dana");

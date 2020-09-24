@@ -17,7 +17,7 @@ public class    Country {
     private String countryName;
 
     @OneToMany(cascade = {CascadeType.ALL},
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             mappedBy = "country")
     private List<Hotel> hotels;
 

@@ -23,7 +23,6 @@
         <secutiry:authorize access="hasRole('MANAGER')">
             <a  href="${pageContext.request.contextPath}/manager/addHotel">Add Hotel</a>
         </secutiry:authorize>
-
     </div>
 
 </body>

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import javax.sql.DataSource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -30,6 +31,14 @@ public class Apartments {
 
     @OneToMany(mappedBy = "apartments")
     private List<Reservation> reservations;
+
+    public void addReservation(Reservation reservation){
+        if (reservation==null){
+            reservations = new ArrayList<>();
+        }
+        reservation.setApartments(this);
+        reservations.add(reservation);
+    }
 
     public Apartments(String roomClass, int numberOfRooms) {
         this.roomClass = roomClass;
@@ -75,5 +84,13 @@ public class Apartments {
 
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
+    }
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
     }
 }
