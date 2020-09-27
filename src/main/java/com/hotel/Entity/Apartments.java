@@ -25,11 +25,15 @@ public class Apartments {
     private int numberOfRooms;
 
     @ManyToOne(fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL)
+            cascade = {CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH})
     @JoinColumn(name = "hotel_id")
     private Hotel hotel;
 
-    @OneToMany(mappedBy = "apartments")
+    @OneToMany(mappedBy = "apartments",
+            cascade = CascadeType.ALL )
     private List<Reservation> reservations;
 
     public void addReservation(Reservation reservation){
@@ -93,4 +97,6 @@ public class Apartments {
     public void setReservations(List<Reservation> reservations) {
         this.reservations = reservations;
     }
+
+
 }

@@ -18,13 +18,15 @@ public class Hotel {
 
     @ManyToOne(fetch = FetchType.EAGER,
                 cascade = {CascadeType.DETACH,
-                        CascadeType.MERGE,
-                        CascadeType.PERSIST,
-                        CascadeType.REFRESH})
+                CascadeType.MERGE,
+                CascadeType.PERSIST,
+                CascadeType.REFRESH})
     @JoinColumn(name = "country_id")
     private Country country;
 
-    @OneToMany(mappedBy = "hotel")
+    @OneToMany(mappedBy = "hotel",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
     private List<Apartments> apartmentsList;
 
     public Hotel() {
@@ -86,4 +88,6 @@ public class Hotel {
                 ", hotelName='" + hotelName + '\'' +
                 '}';
     }
+
+
 }

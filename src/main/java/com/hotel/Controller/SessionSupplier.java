@@ -18,7 +18,7 @@ import javax.sql.DataSource;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Component()
+
 public class SessionSupplier {
 
 
@@ -31,6 +31,7 @@ public class SessionSupplier {
                     .addAnnotatedClass(Reservation.class)
                     .buildSessionFactory();
     public Session getSession(){
+
         return sessionFactory.getCurrentSession();
     }
 
@@ -179,24 +180,24 @@ public class SessionSupplier {
             sessionFactory.close();
         }
     }
-    public void addHotel(){
-
-        try {
-            Session session = getSession();
-            session.beginTransaction();
-//            Country country = new Country("Germany");
-            Hotel hotel = new Hotel("Spain hotel");
-//            Country country = session.get(Country.class,3);
-            Country country = new Country("Spain");
-            country.addHotel(hotel);
-//            hotel.setCountry(country);
-            session.save(country);
-//            session.save(hotel);
-            session.getTransaction().commit();
-        } finally {
-            sessionFactory.close();
-        }
-    }
+//    public void addHotel(){
+//
+//        try {
+//            Session session = getSession();
+//            session.beginTransaction();
+////            Country country = new Country("Germany");
+//            Hotel hotel = new Hotel("Spain hotel");
+////            Country country = session.get(Country.class,3);
+//            Country country = new Country("Spain");
+//            country.addHotel(hotel);
+////            hotel.setCountry(country);
+//            session.save(country);
+////            session.save(hotel);
+//            session.getTransaction().commit();
+//        } finally {
+//            sessionFactory.close();
+//        }
+//    }
     public Country getCountryById(int id){
         Country country=null;
         try {
@@ -210,7 +211,7 @@ public class SessionSupplier {
         return country;
     }
 
-    public static void main(String[] args) {
+//    public static void main(String[] args) {
 //        Country c = new SessionSupplier().getCountryById(3);
 //        if(c!=null){
 //            System.out.println(c);
@@ -223,6 +224,6 @@ public class SessionSupplier {
 //        new SessionSupplier().update(2,"Hotel updated");
 //        new SessionSupplier().updateHotelByName("Marina","Marina - 2");
 //        System.out.println(new SessionSupplier().getAllHotels().isEmpty()?"Empty list":"Non-empty list");
-    }
+//    }
 
 }

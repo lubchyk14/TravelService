@@ -15,8 +15,20 @@
 </head>
 <body>
     <div>
-        <p>Requested page has restricted access for Roles : <secutiry:authentication property="principal.authorities"/></p>
+        <secutiry:authentication
+                property="principal.authorities" var="roleRaw"/>
+        <secutiry:authentication
+                property="principal.username" var="userName"/>
 
+        <p>Requested page has restricted access for Roles ${roleRaw} and name: ${userName} </p>
+<%--        <c:param name="userRole" value="${roleRaw}">F</c:param>--%>
+<%--        show this part for users with role - MANAGER --%>
+        <secutiry:authorize access="hasRole('MANAGER')" >
+            <p>
+                <a href="${pageContext.request.contextPath}/manager/addHotel" >Add hotel to system</a>
+                <a href="${pageContext.request.contextPath}/manager/addApartments"  >Add apartments to system</a>
+            </p>
+        </secutiry:authorize>
     </div>
 </body>
 </html>

@@ -17,7 +17,7 @@ public class    Country {
     private String countryName;
 
     @OneToMany(cascade = {CascadeType.ALL},
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             mappedBy = "country")
     private List<Hotel> hotels;
 
@@ -32,14 +32,14 @@ public class    Country {
         this.hotels = hotels;
     }
 
-    @Override
-    public String toString() {
-        return "Country{" +
-                "id=" + id +
-                ", countryName='" + countryName + '\'' +
-                ", hotels=" + hotels +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Country{" +
+//                "id=" + id +
+//                ", countryName='" + countryName + '\'' +
+//                ", hotels=" + hotels +
+//                '}';
+//    }
 
     public void addHotel(Hotel hotel){
         if(hotels==null){
@@ -72,4 +72,5 @@ public class    Country {
     public void setHotels(List<Hotel> hotels) {
         this.hotels = hotels;
     }
+
 }

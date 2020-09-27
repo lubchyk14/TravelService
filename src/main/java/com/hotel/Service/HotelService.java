@@ -1,11 +1,11 @@
-package com.hotel.DAO;
+package com.hotel.Service;
 
 import com.hotel.Entity.Apartments;
 import com.hotel.Entity.Hotel;
 
 import java.util.List;
 
-public interface HotelDAO {
+public interface HotelService {
 
     public Hotel findHotelByName(String hotelName);
 

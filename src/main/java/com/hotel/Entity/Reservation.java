@@ -1,6 +1,8 @@
 package com.hotel.Entity;
 
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -20,12 +22,16 @@ public class Reservation {
     @Column(name = "end_date")
     private Date endDate;
 
+    @Column(name = "user_name")
+    private String userName;
+
     @ManyToOne(cascade = {CascadeType.DETACH,
             CascadeType.MERGE,
             CascadeType.PERSIST,
             CascadeType.REFRESH})
     @JoinColumn(name = "apartments_id")
     private Apartments apartments;
+
 
     public Reservation(Date startDate, Date endDate) {
         this.startDate = startDate;
@@ -84,5 +90,13 @@ public class Reservation {
 
     public void setApartments(Apartments apartments) {
         this.apartments = apartments;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

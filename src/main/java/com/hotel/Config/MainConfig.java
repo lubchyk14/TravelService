@@ -1,19 +1,17 @@
 package com.hotel.Config;
 
-import com.hotel.Entity.Hotel;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -25,9 +23,14 @@ import java.util.Properties;
 @Configuration
 @ComponentScan(basePackages = "com.hotel")
 @EnableWebMvc
-//@PropertySource("classpath:hibernate.cfg.xml")
+@EnableTransactionManagement
+@PropertySource("classpath:persistence.security.properties")
 public class MainConfig {
 
+    //will be autowired from PropertySource file (persistence.security.properties)
+    //read all properties and allocate them inside Environment variable(as bean) <----springframework.core.env
+    @Autowired
+    private Environment environment;
 
     @Bean
     public ViewResolver viewResolver(){
@@ -38,7 +41,7 @@ public class MainConfig {
     return viewResolver;
     }
 
-    @Bean
+    @Bean("simpleDataSource")
     public DataSource getDataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
@@ -60,10 +63,11 @@ public class MainConfig {
         dataSource.setMaxIdleTime(30000);
         return dataSource;
     }
-    
-    @Bean()
+
+    @Bean(name = "sessionFactory")
     @Autowired
-    public SessionFactory getSessionFactory(ComboPooledDataSource dataSource){
+
+    public LocalSessionFactoryBean getSessionFactory(@Qualifier("myDataSource") ComboPooledDataSource dataSource){
         LocalSessionFactoryBean localSessionFactoryBean =
                 new LocalSessionFactoryBean();
         localSessionFactoryBean.setDataSource(dataSource);
@@ -72,18 +76,45 @@ public class MainConfig {
         properties.setProperty("hibernate.dialect","org.hibernate.dialect.MySQLDialect" );
         properties.setProperty("hibernate.show_sql","true");
         localSessionFactoryBean.setHibernateProperties(properties);
-
-        return localSessionFactoryBean.getObject();
+        return localSessionFactoryBean;
     }
 
-//    @Bean
-//    @Autowired
-//    public HibernateTransactionManager hibernateTransactionManager(LocalSessionFactoryBean localSessionFactoryBean){
-//        HibernateTransactionManager manager =
-//                new HibernateTransactionManager();
-//        manager.setSessionFactory((SessionFactory) localSessionFactoryBean);
-//        return manager;
-//    }
+    @Bean
+    @Autowired
+    public HibernateTransactionManager hibernateTransactionManager(LocalSessionFactoryBean localSessionFactoryBean){
+        HibernateTransactionManager manager =
+                new HibernateTransactionManager();
+        manager.setSessionFactory( localSessionFactoryBean.getObject());
+        return manager;
+    }
+
+    @Bean
+    public DataSource securityDataSource(){
+        //create connection pool
+        ComboPooledDataSource securityDataSource =
+                new ComboPooledDataSource();
+        //set the jdbc driver
+        try {
+            securityDataSource.setDriverClass(environment.getProperty("jdbc.driver"));
+        } catch (PropertyVetoException e) {
+            throw  new RuntimeException();
+        }
+
+        //set database connection properties
+        securityDataSource.setJdbcUrl(environment.getProperty("jdbc.url"));
+        securityDataSource.setUser(environment.getProperty("jdbc.user"));
+        securityDataSource.setPassword(environment.getProperty("jdbc.password"));
+
+        //set connection pool properties
+        securityDataSource.setInitialPoolSize(getIntProperty("connection.pool.initialPoolSize"));
+        return securityDataSource;
+    }
+
+    private int getIntProperty(String property){
+        String prop = environment.getProperty(property);
+        return Integer.parseInt(prop);
+    }
+
 //    @Bean
 //    public PlatformTransactionManager hibernateTransactionManager() {
 //        HibernateTransactionManager transactionManager
