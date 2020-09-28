@@ -33,7 +33,8 @@ public class Apartments {
     private Hotel hotel;
 
     @OneToMany(mappedBy = "apartments",
-            cascade = CascadeType.ALL )
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER)
     private List<Reservation> reservations;
 
     public void addReservation(Reservation reservation){

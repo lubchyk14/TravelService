@@ -32,6 +32,11 @@ public class Reservation {
     @JoinColumn(name = "apartments_id")
     private Apartments apartments;
 
+    public Reservation(Date startDate, Date endDate, String userName) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.userName = userName;
+    }
 
     public Reservation(Date startDate, Date endDate) {
         this.startDate = startDate;
@@ -98,5 +103,14 @@ public class Reservation {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", userName='" + userName + '\'' +
+                '}';
     }
 }

@@ -211,7 +211,11 @@ public class SessionSupplier {
         return country;
     }
 
-//    public static void main(String[] args) {
+//    private List<Apartments> getApartments(){
+//        Session session = getSession();
+//        session.createQuery("from Apartments where hotel_id=11")
+//    }
+    public static void main(String[] args) {
 //        Country c = new SessionSupplier().getCountryById(3);
 //        if(c!=null){
 //            System.out.println(c);
@@ -224,6 +228,6 @@ public class SessionSupplier {
 //        new SessionSupplier().update(2,"Hotel updated");
 //        new SessionSupplier().updateHotelByName("Marina","Marina - 2");
 //        System.out.println(new SessionSupplier().getAllHotels().isEmpty()?"Empty list":"Non-empty list");
-//    }
+    }
 
 }
