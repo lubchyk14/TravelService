@@ -9,9 +9,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
@@ -45,6 +44,15 @@ public class ReservationServiceImpl implements ReservationService {
     @Transactional
     public void saveReservation(Reservation reservation) {
         reservationDAO.saveReservation(reservation);
+    }
+
+    @Override
+    @Transactional
+    public HashMap<String, List<Reservation>> getAllUsersWithReservations() {
+        List<Reservation> reservationList =
+                reservationDAO.getAllReservations();
+        return (HashMap<String, List<Reservation>>) reservationList.stream().collect(Collectors.groupingBy(Reservation::getUserName));
+
     }
 
 

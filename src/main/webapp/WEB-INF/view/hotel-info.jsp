@@ -9,7 +9,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="secutiry" uri="http://www.springframework.org/security/tags" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Title</title>
@@ -36,9 +35,14 @@
                         </c:when>
                         <c:otherwise>
                             <td>
-                                <form:form modelAttribute="reservation" action="${pageContext.request.contextPath}/user/bookApartments/${apartments.id}"
+
+                                <form:form modelAttribute="reservation"
+                                           action="${pageContext.request.contextPath}/user/bookApartments/${apartments.id}"
                                       method="get">
-                                    <button type="submit" >Book apartments</button>
+                                    <input type="text" name="startDate" value="${reservation.startDate}" hidden>
+                                    <input type="text" name="endDate" value="${reservation.endDate}" hidden>
+                                    <input type="text" name="userName" value="${reservation.userName}" hidden>
+                                    <button onclick="return confirm('Confirm booking ?')" type="submit"  >Book apartments</button>
                                 </form:form>
                             </td>
                         </c:otherwise>

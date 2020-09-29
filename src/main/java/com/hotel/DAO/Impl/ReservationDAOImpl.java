@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class ReservationDAOImpl implements ReservationDAO {
 
@@ -19,6 +21,13 @@ public class ReservationDAOImpl implements ReservationDAO {
     public void saveReservation(Reservation reservation) {
         Session session = sessionFactory.getCurrentSession();
         session.save(reservation);
+    }
+
+    @Override
+    public List<Reservation> getAllReservations() {
+        Session session = sessionFactory.getCurrentSession();
+        List <Reservation> reservationList=session.createQuery("from Reservation ").getResultList();
+        return reservationList;
     }
 
 //    @Autowired

@@ -64,8 +64,8 @@ public class UserController {
                 LocalDate.parse(endDate));
 //        List<Apartments> apartmentsList = hotel.getApartmentsList();
 
-        Date start = Date.valueOf(LocalDate.parse(startDate));
-        Date end = Date.valueOf(LocalDate.parse(endDate));
+        Date start = Date.valueOf(startDate);
+        Date end = Date.valueOf(endDate);
         Reservation reservation = new Reservation(start,end,userName);
         model.addAttribute("reservation",reservation);
         System.out.println(reservation);
@@ -78,14 +78,18 @@ public class UserController {
 
     @GetMapping("/bookApartments/{apartmentsId}")
     public String bookApartments(@PathVariable int apartmentsId,
-                                 @ModelAttribute Reservation reservation )
+                                 @ModelAttribute Reservation reservation,
+                                 @RequestParam(name = "userName") String userName,
+                                 @RequestParam String startDate,
+                                 @RequestParam String endDate)
     {
-
 
         System.out.println(reservation+ "After <------------");
         Apartments apartments = apartmentsService.getApartmentsById(apartmentsId);
-        reservation.setApartments(apartments);
-        reservationService.saveReservation(reservation);
+//        reservation.setApartments(apartments);
+        Reservation reservation1 = new Reservation(Date.valueOf(startDate),Date.valueOf(endDate),userName);
+        reservation1.setApartments(apartments);
+        reservationService.saveReservation(reservation1);
 
         return "home";
     }
