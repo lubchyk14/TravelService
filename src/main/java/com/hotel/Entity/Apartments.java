@@ -2,9 +2,11 @@ package com.hotel.Entity;
 
 import org.hibernate.annotations.Fetch;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
 import javax.sql.DataSource;
+import javax.validation.constraints.Min;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +23,8 @@ public class Apartments {
     @Column(name = "room_class")
     private String roomClass;
 
+    @NumberFormat()
+    @Min(value = 1,message = "Minimum number of rooms is 1")
     @Column(name = "number_of_rooms")
     private int numberOfRooms;
 

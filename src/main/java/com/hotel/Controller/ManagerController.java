@@ -11,8 +11,10 @@ import com.hotel.Service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,15 +63,30 @@ public class ManagerController {
         return "add-apartments-form";
     }
     @PostMapping("/addApartments")
-    public String addApartmentsToHotel(@ModelAttribute Apartments apartments,
-                                       @RequestParam int hotel,
-                                       Model model){
-        Hotel hotelObj = hotelService.findHotelById(hotel);
-        apartments.setHotel(hotelObj);
-        apartmentsService.saveApartments(apartments);
-        String successMessage = apartments.getRoomClass()+" apartments successfully added to "
-                +hotelObj.getHotelName()+" in "+hotelObj.getCountry().getCountryName();
-        model.addAttribute("success",successMessage);
+    public String addApartmentsToHotel( @ModelAttribute @Valid Apartments apartments,
+                                        BindingResult bindingResult,
+                                        @RequestParam String hotelId,
+                                       Model model ){
+        List<Hotel> hotels = hotelService.getAllHotels();
+        model.addAttribute("hotels",hotels);
+        if(bindingResult.hasErrors()){
+            return "add-apartments-form";
+        }
+        try {
+            Integer id = Integer.valueOf(hotelId);
+            Hotel hotelObj = hotelService.findHotelById(id);
+            apartments.setHotel(hotelObj);
+            apartmentsService.saveApartments(apartments);
+            String successMessage = apartments.getRoomClass()+" apartments successfully added to "
+                    +hotelObj.getHotelName()+" in "+hotelObj.getCountry().getCountryName();
+            model.addAttribute("success",successMessage);
+        } catch (NumberFormatException e) {
+            model.addAttribute("numberError","Count of rooms must be a number");
+            return "add-apartments-form";
+        }catch (NullPointerException exception){
+            model.addAttribute("hotelError","Specified wrong hotel name");
+            return "add-apartments-form";
+        }
         return "success";
     }
 

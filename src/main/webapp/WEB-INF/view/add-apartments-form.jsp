@@ -10,29 +10,43 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="secutiry" uri="http://www.springframework.org/security/tags" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Add apartments</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <form:form action="${pageContext.request.contextPath}/manager/addApartments" method="post"
-                modelAttribute="apartments">
-        <select name="hotel">
-            <c:forEach items="${hotels}" var="hotelOne">
-                <option value="${hotelOne.id}">${hotelOne.hotelName}</option>
-            </c:forEach>
-        </select>
-        <tr>
-            <td><label>Number of rooms</label></td>
-            <td><form:input path="numberOfRooms" /></td>
-        </tr>
-        <tr>
-            <td><label>Class of the room</label></td>
-            <td><form:input path="roomClass"/></td>
-        </tr>
-        <button type="submit">Add apartments</button>
-    </form:form>
+    <div class="container">
+        <div class="jumbotron">
+            <div class="alert alert-info">
+                Here you can add new apartments to already tracked in system hotel
+            </div>
+            <form:form action="${pageContext.request.contextPath}/manager/addApartments"
+                       method="post" cssClass="form-inline" modelAttribute="apartments">
+                <div class="form-group">
+                    <label for="hotel">Hotel : </label>
+                    <select id="hotel" class="form-control" required name="hotelId">
+                        <c:forEach items="${hotels}"  var="hotelOne">
+                            <option value="${hotelOne.id}">${hotelOne.hotelName}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="rooms">Number of bedrooms</label>
+                    <form:input  path="numberOfRooms" cssClass="form-control" id="rooms"/>
+                </div>
 
+                <div class="form-group">
+                    <label for="apartmentsClass">Apartments type</label>
+                    <form:input path="roomClass" cssClass="form-control" id="apartmentsClass"/>
+                </div>
+                <br>
+                <form:errors path="numberOfRooms"></form:errors>
+                <button type="submit" class="btn btn-success">Add apartments</button>
+            </form:form>
+        </div>
+    </div>
 </body>
 </html>

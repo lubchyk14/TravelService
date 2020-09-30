@@ -30,6 +30,4 @@ public class ReservationDAOImpl implements ReservationDAO {
         return reservationList;
     }
 
-//    @Autowired
-//    private SessionFactory sessionFactory;
 }

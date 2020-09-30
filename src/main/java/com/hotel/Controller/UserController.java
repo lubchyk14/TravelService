@@ -83,7 +83,6 @@ public class UserController {
     {
 
         Apartments apartments = apartmentsService.getApartmentsById(apartmentsId);
-//        reservation.setApartments(apartments);
         Reservation reservation1 = new Reservation(Date.valueOf(startDate),Date.valueOf(endDate),userName);
         reservation1.setApartments(apartments);
         reservationService.saveReservation(reservation1);

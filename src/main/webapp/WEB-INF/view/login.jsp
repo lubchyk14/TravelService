@@ -1,6 +1,5 @@
 
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: lubchyk
@@ -9,6 +8,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="secutiry" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
 
@@ -23,8 +25,10 @@
 
 </head>
 <body>
+    <secutiry:authorize access="isAuthenticated()">
+        <% response.sendRedirect(request.getContextPath()+"/");%>
+    </secutiry:authorize>
     <div>
-
         <div id="loginbox" style="margin-top: 50px;"
              class="mainbox col-md-3 col-md-offset-2 col-sm-6 col-sm-offset-2">
 

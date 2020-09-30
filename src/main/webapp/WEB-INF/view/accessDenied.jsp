@@ -12,23 +12,28 @@
 <html>
 <head>
     <title>Access Denied</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div>
         <secutiry:authentication
                 property="principal.authorities" var="roleRaw"/>
         <secutiry:authentication
                 property="principal.username" var="userName"/>
 
-        <p>Requested page has restricted access for Roles ${roleRaw} and name: ${userName} </p>
-<%--        <c:param name="userRole" value="${roleRaw}">F</c:param>--%>
-<%--        show this part for users with role - MANAGER --%>
-        <secutiry:authorize access="hasRole('MANAGER')" >
-            <p>
-                <a href="${pageContext.request.contextPath}/manager/addHotel" >Add hotel to system</a>
-                <a href="${pageContext.request.contextPath}/manager/addApartments"  >Add apartments to system</a>
-            </p>
-        </secutiry:authorize>
-    </div>
+        <div class="container">
+            <div class="alert alert-danger">
+                <strong>Access denied for ${roleRaw} </strong>
+            </div>
+        </div>
+        <div class="container">
+            <div class="btn-group">
+                <a href="${pageContext.request.contextPath}/" class="btn btn-success" role="button">Go to main page </a>
+                <form:form action="${pageContext.request.contextPath}/logout">
+                    <input type="submit" class="btn btn-warning" value="Log out"/>
+                </form:form>
+            </div>
+        </div>
 </body>
 </html>

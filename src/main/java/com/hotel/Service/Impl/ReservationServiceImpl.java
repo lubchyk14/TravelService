@@ -51,7 +51,9 @@ public class ReservationServiceImpl implements ReservationService {
     public HashMap<String, List<Reservation>> getAllUsersWithReservations() {
         List<Reservation> reservationList =
                 reservationDAO.getAllReservations();
-        return (HashMap<String, List<Reservation>>) reservationList.stream().collect(Collectors.groupingBy(Reservation::getUserName));
+        return (HashMap<String, List<Reservation>>) reservationList
+                .stream()
+                .collect(Collectors.groupingBy(Reservation::getUserName));
 
     }
 

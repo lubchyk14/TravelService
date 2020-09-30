@@ -11,8 +11,6 @@ public interface ApartmentsService {
 
     public void saveApartments(Apartments apartments);
 
-    public Set<Integer> findValidApartmentsFromHotelByDates(Date start, Date end, List<Apartments> apartmentsList);
-
     public List<Apartments> getApartmentsByHotelId(Hotel hotel);
 
     public Apartments getApartmentsById(int apartmentsId);

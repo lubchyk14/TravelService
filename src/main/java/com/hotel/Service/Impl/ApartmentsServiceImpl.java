@@ -30,22 +30,22 @@ public class ApartmentsServiceImpl implements ApartmentsService {
         apartmentsDAO.saveApartments(apartments);
     }
 
-    @Override
-    @Transactional
-    public Set<Integer> findValidApartmentsFromHotelByDates(Date start, Date end, List<Apartments> apartmentsList) {
-//        Set<Integer> listOfValidReservationIds = apartmentsList
-//                .stream()
-//                .flatMap(apartments -> apartments.getReservations().stream())
-//                .map(Reservation::getId )
-//                .collect(Collectors.toSet());
-//        List<Reservation> list =
-//                reservationDAO.findReservationsByDatesAndIds(start,end,listOfValidReservationIds);
+//    @Override
+//    @Transactional
+//    public Set<Integer> findValidApartmentsFromHotelByDates(Date start, Date end, List<Apartments> apartmentsList) {
+////        Set<Integer> listOfValidReservationIds = apartmentsList
+////                .stream()
+////                .flatMap(apartments -> apartments.getReservations().stream())
+////                .map(Reservation::getId )
+////                .collect(Collectors.toSet());
+////        List<Reservation> list =
+////                reservationDAO.findReservationsByDatesAndIds(start,end,listOfValidReservationIds);
+////
 //
-
-
-
-        return null;
-    }
+//
+//
+//        return null;
+//    }
 
     @Override
     @Transactional

@@ -9,7 +9,7 @@ import java.util.List;
 public interface CountryDAO {
 
     public void saveCountry(Country country);
-//    public void saveCountry(String countryToSave);
+
     public List<Country> getCountries();
 
     public Country getCountryById(int country);

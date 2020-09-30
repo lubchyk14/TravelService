@@ -11,14 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MainController {
 
-    @Autowired
-    private CountryService countryDAO;
-
-    @GetMapping("/home")
-    public String home(Model model){
-        return "home";
-    }
-
     @GetMapping("/loginPage")
     public String login(){
         return "login";

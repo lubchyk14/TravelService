@@ -16,10 +16,6 @@ import java.util.List;
 @Repository
 public class CountryDAOImpl implements CountryDAO {
 
-//    @Autowired
-//    @Qualifier("sessionFactoryBean")
-//    private LocalSessionFactoryBean sessionFactoryBean;
-
     @Autowired
     @Qualifier("sessionFactory")
     private SessionFactory sessionFactory;

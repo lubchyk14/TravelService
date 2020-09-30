@@ -40,6 +40,4 @@ public class ApartmentsDAOImpl implements ApartmentsDAO {
 
     }
 
-//    @Autowired
-//    private SessionFactory sessionFactory;
 }

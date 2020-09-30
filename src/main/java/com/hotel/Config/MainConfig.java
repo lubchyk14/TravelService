@@ -48,9 +48,9 @@ public class MainConfig {
         dataSource.setUrl("jdbc:mysql://localhost:3306/hotel_project");
         dataSource.setUsername("hotel_user");
         dataSource.setPassword("hotel_user");
-//        dataSource.getConnection().prepareStatement("").execute();
         return dataSource;
     }
+
     @Bean(name = "myDataSource")
     public ComboPooledDataSource getComboDataSource() throws PropertyVetoException {
         ComboPooledDataSource dataSource = new ComboPooledDataSource();
@@ -80,6 +80,7 @@ public class MainConfig {
 
     @Bean
     @Autowired
+    //make @Transactional annotation enabled
     public HibernateTransactionManager hibernateTransactionManager(LocalSessionFactoryBean localSessionFactoryBean){
         HibernateTransactionManager manager =
                 new HibernateTransactionManager();

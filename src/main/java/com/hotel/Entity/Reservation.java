@@ -113,4 +113,26 @@ public class Reservation {
                 ", userName='" + userName + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Reservation)) return false;
+
+        Reservation that = (Reservation) o;
+
+        if (startDate != null ? !startDate.equals(that.startDate) : that.startDate != null) return false;
+        if (endDate != null ? !endDate.equals(that.endDate) : that.endDate != null) return false;
+        if (userName != null ? !userName.equals(that.userName) : that.userName != null) return false;
+        return apartments != null ? apartments.equals(that.apartments) : that.apartments == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = startDate != null ? startDate.hashCode() : 0;
+        result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
+        result = 31 * result + (userName != null ? userName.hashCode() : 0);
+        result = 31 * result + (apartments != null ? apartments.hashCode() : 0);
+        return result;
+    }
 }

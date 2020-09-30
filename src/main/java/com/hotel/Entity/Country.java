@@ -32,15 +32,6 @@ public class    Country {
         this.hotels = hotels;
     }
 
-//    @Override
-//    public String toString() {
-//        return "Country{" +
-//                "id=" + id +
-//                ", countryName='" + countryName + '\'' +
-//                ", hotels=" + hotels +
-//                '}';
-//    }
-
     public void addHotel(Hotel hotel){
         if(hotels==null){
             hotels=new ArrayList<>();
