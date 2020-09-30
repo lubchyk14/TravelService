@@ -40,7 +40,7 @@ public class UserController {
     public String findHotelInCountry(@RequestParam String hotelName ,Model model){
         Hotel hotel = hotelService.findHotelByName(hotelName);
         if(hotel==null){
-            model.addAttribute("hotelNotFound","Requested hotel name not registered in system");
+            model.addAttribute("hotelNotFound","Hotel with specified name not found : "+hotelName);
             return "find-hotel-form";
         }
         model.addAttribute("hotel",hotel);
@@ -58,11 +58,10 @@ public class UserController {
         Hotel hotel = hotelService.findHotelByName(hotelName);
         List <Apartments> apartmentsList =
                 apartmentsService.getApartmentsByHotelId(hotel);
-        System.out.println("HERE<_-------------------");
         Set<Integer> setOfInvalidApartments = reservationService.getInvalidIdsOfApartments(apartmentsList,
                 LocalDate.parse(startDate),
                 LocalDate.parse(endDate));
-//        List<Apartments> apartmentsList = hotel.getApartmentsList();
+
 
         Date start = Date.valueOf(startDate);
         Date end = Date.valueOf(endDate);
@@ -71,35 +70,29 @@ public class UserController {
         System.out.println(reservation);
         model.addAttribute("invalid",setOfInvalidApartments);
 
-//        Set<Integer> validReservationIds = apartmentsService.findValidApartmentsFromHotelByDates(start,end,apartmentsList);
         model.addAttribute("hotel",hotel);
         return "hotel-info";
     }
 
     @GetMapping("/bookApartments/{apartmentsId}")
     public String bookApartments(@PathVariable int apartmentsId,
-                                 @ModelAttribute Reservation reservation,
                                  @RequestParam(name = "userName") String userName,
                                  @RequestParam String startDate,
-                                 @RequestParam String endDate)
+                                 @RequestParam String endDate,
+                                 Model model)
     {
 
-        System.out.println(reservation+ "After <------------");
         Apartments apartments = apartmentsService.getApartmentsById(apartmentsId);
 //        reservation.setApartments(apartments);
         Reservation reservation1 = new Reservation(Date.valueOf(startDate),Date.valueOf(endDate),userName);
         reservation1.setApartments(apartments);
         reservationService.saveReservation(reservation1);
-
-        return "home";
+        String success = "You successfully reserved "+apartments.getNumberOfRooms()+"-bedroom apartments in "+
+                reservation1.getApartments().getHotel().getHotelName()+" hotel from : "+reservation1.getStartDate()+
+                " to "+reservation1.getEndDate();
+        model.addAttribute("success",success);
+        return "success";
     }
 
 
-
-
-//    @GetMapping("/getAllCountries")
-//    public String getAllCountries(Model model){
-//        model.addAttribute("countries",countryService.getAllCountries());
-//        return "show-countries";
-//    }
 }

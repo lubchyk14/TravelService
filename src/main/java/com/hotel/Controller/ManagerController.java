@@ -77,22 +77,7 @@ public class ManagerController {
     public String getAllReservations(Model model){
         Map<String, List<Reservation>> reservations =
                 reservationService.getAllUsersWithReservations();
-//        for (Map.Entry<String,List<Reservation>> e:map.entrySet()) {
-//            System.out.println(e.getKey()+" "+e.getValue());
-//        }
-//        Map<String,String> map1 = new HashMap<>();
-//        map1.put("key1","value1");
-//        model.addAttribute("map",map);
-//        model.addAttribute("set",map.keySet());
-//        Map<String, String> countryList = new HashMap<String, String>();
-//        countryList.put("United States", "Washington DC");
-//        countryList.put("India", "Delhi");
-//        countryList.put("Germany", "Berlin");
-//        countryList.put("France", "Paris");
-//        countryList.put("Italy", "Rome");
-        model.addAttribute("reservationsList", reservations);
-//        request.setAttribute("capitalList", countryList);
+        model.addAttribute("reservationsMap", reservations);
         return "find-user-reservations";
-//        return "find-user-reservations";
     }
 }

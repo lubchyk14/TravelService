@@ -18,9 +18,6 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-//    @Autowired
-//    private DataSource myDataSource;
-
     @Autowired
     @Qualifier("securityDataSource")
     private DataSource securityDataSource;
@@ -30,15 +27,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.jdbcAuthentication().dataSource(securityDataSource);
     }
 
-    //    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        User.UserBuilder userBuilder =User.withDefaultPasswordEncoder();
-////        auth.jdbcAuthentication().dataSource(myDataSource);
-//        auth.inMemoryAuthentication()
-//                .withUser(userBuilder.username("Olga").password("123").roles("MANAGER"))
-//                .withUser(userBuilder.username("Dana").password("123").roles("USER"));
-//    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
@@ -46,8 +34,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/home").hasAnyRole("MANAGER","USER")
                 .antMatchers("/manager/**").hasRole("MANAGER")
                 .antMatchers("/user/**").hasAnyRole("MANAGER","USER")
-//                .anyRequest()
-//                .authenticated()
                 .and()
                 .formLogin()
                     .loginPage("/loginPage")

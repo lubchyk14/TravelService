@@ -13,15 +13,27 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <p>In this page can find hotel</p>
-    <br>
-    <p>${hotelNotFound}</p>
-    <br>
-    <form:form action="${pageContext.request.contextPath}/user/findHotel" method="post">
-        <input type="text" name="hotelName" placeholder="Type hotel's name here"/>
-        <button type="submit">Find hotel</button>
-    </form:form>
+    <div class="container">
+        <h2>Find hotel</h2>
+            <c:if test="${hotelNotFound!=null}">
+                <div class="alert alert-danger">
+                    <strong>WARNING!</strong>${hotelNotFound}
+                </div>
+            </c:if>
+            <form:form action="${pageContext.request.contextPath}/user/findHotel" method="post" >
+                <div class="form-group">
+                    <label for="hotel">Hotel name :</label>
+                    <input type="text" id="hotel" name="hotelName" placeholder="Type hotel's name" required>
+                </div>
+                <button type="submit" class="btn btn-info" >
+                    <span class="glyphicon glyphicon-search"></span>Find
+                </button>
+            </form:form>
+    </div>
 </body>
 </html>

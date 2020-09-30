@@ -12,39 +12,47 @@
 <html>
 <head>
     <title>View all reservations</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <table>
-        <tr>
-            <th>
-                <h3>User name</h3>
-            </th>
-            <th>
-                <h3>Reservations</h3>
-            </th>
-        </tr>
-        <c:forEach var="record" items="${reservationsList}">
-            <tr>
-                <td>
-                        ${record.key}
-                </td>
-                <td>
-                    <ul>
-                        <c:forEach  items="${record.value}" var="reservation" >
-                            <li>
-                                    Reservation : arriving date : ${reservation.startDate} ,
-                                leaving date : ${reservation.endDate},
-                                apartments class : ${reservation.apartments.roomClass},
-                                number of rooms : ${reservation.apartments.numberOfRooms},
-                                hotel name : ${reservation.apartments.hotel.hotelName}
-                                <br>
-                            </li>
-                        </c:forEach>
-                    </ul>
-                </td>
-            </tr>
-        </c:forEach>
-    </table>
+    <div class="container">
+        <h2>List of reservations : </h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        User's name
+                    </th>
+                    <th>
+                        Reservation detail
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach  var="record" items="${reservationsMap}">
+                    <tr>
+                        <td>${record.key}</td>
 
+                        <td>
+                            <div class="list-group">
+                                <c:forEach  items="${record.value}" var="reservation" >
+                                    <a href="#" class="list-group-item">
+                                        Reservation : Arriving date : ${reservation.startDate} ,
+                                        Leaving date : ${reservation.endDate},
+                                        Apartments class : ${reservation.apartments.roomClass},
+                                        Number of rooms : ${reservation.apartments.numberOfRooms},
+                                        Hotel : ${reservation.apartments.hotel.hotelName}
+                                        <br>
+                                    </a>
+                                </c:forEach>
+                            </div>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

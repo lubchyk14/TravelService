@@ -16,7 +16,6 @@ public class MainController {
 
     @GetMapping("/home")
     public String home(Model model){
-//        countryDAO.saveCountry("Canada");
         return "home";
     }
 

@@ -66,7 +66,6 @@ public class MainConfig {
 
     @Bean(name = "sessionFactory")
     @Autowired
-
     public LocalSessionFactoryBean getSessionFactory(@Qualifier("myDataSource") ComboPooledDataSource dataSource){
         LocalSessionFactoryBean localSessionFactoryBean =
                 new LocalSessionFactoryBean();
@@ -115,13 +114,6 @@ public class MainConfig {
         return Integer.parseInt(prop);
     }
 
-//    @Bean
-//    public PlatformTransactionManager hibernateTransactionManager() {
-//        HibernateTransactionManager transactionManager
-//                = new HibernateTransactionManager();
-//        transactionManager.setSessionFactory(sessionFactory().getObject());
-//        return transactionManager;
-//    }
 
 }
 
