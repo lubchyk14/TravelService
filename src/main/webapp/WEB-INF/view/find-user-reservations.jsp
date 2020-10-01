@@ -53,6 +53,7 @@
                 </c:forEach>
             </tbody>
         </table>
+        <a href="${pageContext.request.contextPath}/" class="btn btn-success" role="button">Go to main page </a>
     </div>
 </body>
 </html>

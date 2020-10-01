@@ -98,7 +98,11 @@
                         property="principal.username" var="userName"/>
                 <input type="hidden" name="userName" value="${userName}">
                 <input type="hidden" name="hotelName" value="${hotel.hotelName}">
-                <button type="submit" class="btn btn-success">Book apartments</button>
+                <button type="submit" class="btn btn-success">Check available apartments</button>
+            </form:form>
+            <a href="${pageContext.request.contextPath}/" class="btn btn-success" role="button">Main page</a>
+            <form:form action="${pageContext.request.contextPath}/logout" >
+                <input type="submit" class="btn btn-warning" value="Log out"/>
             </form:form>
         </div>
     </div>
