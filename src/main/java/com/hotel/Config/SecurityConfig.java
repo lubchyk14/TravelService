@@ -1,34 +1,41 @@
 package com.hotel.Config;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    @Qualifier("securityDataSource")
+    private DataSource securityDataSource;
+
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        User.UserBuilder userBuilder =User.withDefaultPasswordEncoder();
-
-        auth.inMemoryAuthentication()
-                .withUser(userBuilder.username("Olga").password("123").roles("MANAGER"))
-                .withUser(userBuilder.username("Dana").password("123").roles("USER"));
+        auth.jdbcAuthentication().dataSource(securityDataSource);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
+                .antMatchers("/home").hasAnyRole("MANAGER","USER")
                 .antMatchers("/manager/**").hasRole("MANAGER")
                 .antMatchers("/user/**").hasAnyRole("MANAGER","USER")
-                .anyRequest()
-                .authenticated()
                 .and()
                 .formLogin()
                     .loginPage("/loginPage")
@@ -40,6 +47,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .logout()
                     .permitAll();
-
     }
+
 }

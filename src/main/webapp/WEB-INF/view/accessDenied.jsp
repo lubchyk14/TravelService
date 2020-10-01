@@ -12,11 +12,28 @@
 <html>
 <head>
     <title>Access Denied</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div>
-        <p>Requested page has restricted access for Roles : <secutiry:authentication property="principal.authorities"/></p>
+        <secutiry:authentication
+                property="principal.authorities" var="roleRaw"/>
+        <secutiry:authentication
+                property="principal.username" var="userName"/>
 
-    </div>
+        <div class="container">
+            <div class="alert alert-danger">
+                <strong>Access denied for ${roleRaw} </strong>
+            </div>
+        </div>
+        <div class="container">
+            <div class="btn-group">
+                <a href="${pageContext.request.contextPath}/" class="btn btn-success" role="button">Go to main page </a>
+                <form:form action="${pageContext.request.contextPath}/logout">
+                    <input type="submit" class="btn btn-warning" value="Log out"/>
+                </form:form>
+            </div>
+        </div>
 </body>
 </html>
