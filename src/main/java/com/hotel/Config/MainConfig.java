@@ -39,6 +39,7 @@ public class MainConfig {
     viewResolver.setPrefix("/WEB-INF/view/");
     viewResolver.setSuffix(".jsp");
     return viewResolver;
+
     }
 
     @Bean("simpleDataSource")
